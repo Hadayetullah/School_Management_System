@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title_block %} Dashboard {% endblock %}
+{% block body_block %}
+<div class="card m-auto" style="margin-top:150px;width:300px;text-align:center">
+  <div class="card-body">
+    <h5 class="card-title">Admission Fee:</h5>
+    <h4 class="card-title" style="font-weight:bold">&#2547; {{ fee }}</h4>
+    <a href="{% url 'App_Payment:admission_fee' %}" class="btn btn-warning btn-lg btn-block">Make Payment</a>
+  </div>
+</div>
+{% endblock %}

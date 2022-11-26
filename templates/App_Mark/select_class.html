@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title_block %} Input Marks {% endblock %}
+{% block body_block %}
+
+<div class="container">
+    <form method="GET">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-sm-12 col-md-8 col-lg-6">
+                <label class="justify-content-center" for="select_class"
+                    style="font-size: 25px;font-weight:bold;">Select class
+                    and course to input
+                    marks
+                </label>
+                <select class="form-control" name="select_class" id="select_class" required>
+                    <option value="">--Select class--</option>
+                    <option value="6">Class - 6</option>
+                    <option value="7">Class - 7</option>
+                    <option value="8">Class - 8</option>
+                    <option value="9">Class - 9</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-sm-12 col-md-8 col-lg-6">
+                <select class="form-control" name="select_course" required>
+                    <option value="">--Select course--</option>
+                    <option value="Bangla">Bangla</option>
+                    <option value="English">English</option>
+                    <option value="Math">Math</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-sm-12 col-md-4 col-lg-6">
+                <button class="form-control btn btn-md btn-secondary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

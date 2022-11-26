@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+{% block title_block %} Profile | {{user.profile.surname}} {% endblock %}
+{% block body_block %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <img src="/media/{{user.profile.profile_pic}}" alt="{{user.profile.surname}}'s photo" width="250px" height="250px">
+      <br><br>
+      <a class="btn btn-md btn-secondary" href="{% url 'App_Login:change_profile' %}">Edit Profile</a>
+    </div>
+    <div class="col-sm-9">
+      <div class="row" style="padding:0; margin:0">
+        <h4 style="margin-top:-5px">Profile Details</h4>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p>Surname</p>
+          <p>Full Name</p>
+          <p>Date of Birth</p>
+          <p>Gender</p>
+          <p>Religion</p>
+          <p>Father Name</p>
+          <p>Occupation</p>
+          <p>Mother Name</p>
+          <p>Village</p>
+          <p>Zipcode</p>
+          <p>Post Office</p>
+          <p>Sub-district</p>
+          <p>District</p>
+          <p>Division</p>
+          <p>Country</p>
+          <p>Phone Number</p>
+          <p>Present Address</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{user.profile.surname}}</p>
+          <p>{{user.profile.full_name}}</p>
+          <p>{{user.profile.dob}}</p>
+          <p>{{user.profile.gender}}</p>
+          <p>{{user.profile.religion}}</p>
+          <p>{{user.profile.blood_group}}</p>
+          <p>{{user.profile.father_name}}</p>
+          <p>{{user.profile.occupation}}</p>
+          <p>{{user.profile.mother_name}}</p>
+          <p>{{user.profile.village}}</p>
+          <p>{{user.profile.zipcode}}</p>
+          <p>{{user.profile.post_office}}</p>
+          <p>{{user.profile.sub_district}}</p>
+          <p>{{user.profile.district}}</p>
+          <p>{{user.profile.division}}</p>
+          <p>{{user.profile.country}}</p>
+          <p>{{user.profile.phone}}</p>
+          <p>{{user.profile.present_address}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

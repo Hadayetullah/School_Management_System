@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title_block %} Input Mark {% endblock %}
+{% block body_block %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col sm-12">
+            <form id="marks">
+                <table class="table table-sm table-bordered text-center" id="{{subject}}">
+                    <tbody>
+                        <tr>
+                            <th class="align-middle" rowspan="3">Roll No.</th>
+                            <th class="align-middle" rowspan="3">Name</th>
+                            <th colspan="14" style="font-size: 20px;font-weight:bold">Class-{{class_no}} Test & Exam
+                                Marks of <span style="color: red;">{{subject}}</span> Course</th>
+                        </tr>
+                        <tr>
+                            <th>Jan</th>
+                            <th>Feb</th>
+                            <th>Mar</th>
+                            <th>Apr</th>
+                            <th>May</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Aug</th>
+                            <th>Sep</th>
+                            <th>Oct</th>
+                            <th>Nov</th>
+                            <th>Dec</th>
+                        </tr>
+                        <tr>
+                            <th class="align-middle">Test-1</th>
+                            <th class="align-middle">Test-2</th>
+                            <th class="align-middle">Test-3</th>
+                            <th class="align-middle">Test-4</th>
+                            <th class="align-middle">Test-5</th>
+                            <th class="align-middle">Mid-Term Exam</th>
+                            <th class="align-middle">Test-7</th>
+                            <th class="align-middle">Test-8</th>
+                            <th class="align-middle">Test-9</th>
+                            <th class="align-middle">Test-10</th>
+                            <th class="align-middle">Test-11</th>
+                            <th class="align-middle">Final Exam</th>
+                        </tr>
+                        {% for student in grade %}
+                        <tr>
+                            <td class="align-middle">{{student.roll}}</td>
+                            <td class="align-middle">{{student.full_name}}</td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test1}}" name="test1"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test2}}" name="test2"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test3}}" name="test3"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test4}}" name="test4"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test5}}" name="test5"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.midterm}}" name="midterm"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test6}}" name="test6"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test7}}" name="test7"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test8}}" name="test8"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test9}}" name="test9"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.test10}}" name="test10"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+                            <td class="align-middle" style="margin:0;padding:0;">
+                                <input class="text-center" type="text" id="{{student.user.pk}}"
+                                    value="{{student.final}}" name="final"
+                                    style="width:100%;height:50px;padding: 0;margin: 0;border: none;">
+                            </td>
+
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button class="btn btn-info btn-lg" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    document.getElementById('marks').addEventListener('submit', submit_marks);
+
+    // Function
+    function submit_marks(e) {
+        let all_students = e.target.elements;
+        let subject = e.target.firstElementChild.id;
+        // console.log(all_students);
+        // console.log(subject);
+        let val = 0;
+        let body = {};
+        for (let x in all_students) {
+            if (all_students[x].type === "text") {
+                let user = all_students[x].id;
+                let name = all_students[x].name;
+                let value = parseInt(all_students[x].value);
+                let u = parseInt(user);
+                // console.log("user ", user, ", name", name, ", value", value);
+                if (val != parseInt(user)) {
+                    x = {};
+                    x["user"] = u;
+                    x["subject"] = subject;
+                    x[name] = value;
+                    body[user] = x;
+                    val = u;
+                }
+
+                else {
+                    let array_objs = Object.getOwnPropertyNames(body);
+                    const found_obj = array_objs.find(element => element === user);
+                    if (found_obj) {
+                        let body1 = body[found_obj];
+                        body1[name] = value;
+                    }
+                }
+            }
+        }
+
+        for (let x in body) {
+            obj_body = body[x];
+            let user_id = obj_body['user'];
+            let api = "http://127.0.0.1:8000/grade/gradeApi1/" + String(user_id) + "/";
+            fetch(api, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(obj_body),
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+
+        }
+
+        e.preventDefault();
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title_block %} Profile | {{teacher.surname}} {% endblock %}
+{% block body_block %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <img src="/media/{{teacher.profile_pic}}" alt="{{user.teacher.surname}}'s photo" width="250px" height="250px">
+      <br><br>
+      <a class="btn btn-md btn-secondary" href="{% url 'App_Teacher:update_profile' pk=teacher.user.pk %}">Edit
+        Profile</a>
+    </div>
+    <div class="col-sm-9">
+      <div class="row" style="padding:0; margin:0">
+        <h4 style="margin-top:-5px">Profile Details</h4>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p>Surname</p>
+          <p>Full Name</p>
+          <p>Gender</p>
+          <p>Date of Birth</p>
+          <p>ID</p>
+          <p>Subjects</p>
+          <p>Religion</p>
+          <p>Phone Number</p>
+          <p>Address</p>
+        </div>
+        <div class="col-sm-10">
+
+          <p>{{teacher.surname}}</p>
+          <p>{{teacher.full_name}}</p>
+          <p>{{teacher.gender}}</p>
+          <p>{{teacher.dob}}</p>
+          <p>{{teacher.id_no}}</p>
+          <p>{{teacher.subject_1}}, {{teacher.subject_2}}</p>
+          <p>{{teacher.religion}}</p>
+          <p>{{teacher.phone_no}}</p>
+          <p>{{teacher.address}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

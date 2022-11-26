@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} View Attendance {% endblock %}
+{% block body_block %}
+
+<div class="container">
+    <h5 style="font-weight: bold;color: #726d6d;">Class - {{ class_no }} [Date : {{date}}]</h5>
+    <div id="get_date" style="display: none;">{{date}}</div>
+    <table class="table" style="color:#6C757D;border: 1px solid#dee2e6;">
+        <thead>
+            <tr style="border-top: none;">
+                <th width="30%" class="text-center" style="border-top: none;">Student ID</th>
+                <th width="40%" style="border-top: none;">Student Name</th>
+                <th width="30%" class="text-center" style="border-top: none; padding-right: 15%;">Attendance Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td class="text-center">{{ student.roll }}</td>
+                <td>{{ student.full_name }}</td>
+                <td class="text-center" style="padding-right: 15%;"><input type="checkbox" id="{{student.id}}"
+                        name="{{date}}"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<script>
+    let get_date = document.getElementById("get_date").textContent;
+    // console.log(get_date);
+    // let date = new Date(get_date);
+    // let year = date.getFullYear().toString();
+    // let month = date.getMonth().toString();
+    // let day = date.getDate().toString();
+
+    // if (month.length == 1) {
+    //     month = "0" + month;
+    // }
+    // if (day.length == 1) {
+    //     day = "0" + day;
+    // }
+
+    // date = year + "-" + month + "-" + day;
+    console.log(get_date);
+    fetch("http://127.0.0.1:8000/attendance/api/", {
+        method: "GET",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => response.json())
+        .then(data => data.forEach(element => {
+            // console.log(element.created);
+            console.log(get_date);
+            if (element.created == get_date) {
+                let id = element.student.toString();
+                let field = document.getElementById(id);
+                field.checked = element.present;
+                field.disabled = true;
+                // if (field != null) {
+                //     field.checked = element.present;
+                //     field.disabled = true;
+                // }
+            }
+        }))
+</script>
+
+{% endblock %}

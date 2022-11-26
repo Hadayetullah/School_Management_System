@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Sign Up | Addmission {% endblock %}
+
+{% block body_block %}
+<div class="m-auto" style="width:500px; text-align:center">
+  <h2>Please sign up here to create student account:</h2>
+  <form method="POST">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-sm">Create Student Account</button>
+  </form>
+
+  <br>
+  <p>Already have an account? <a href="{% url 'App_Login:student_login' %}">Login Here</a></p>
+</div>
+{% endblock %}

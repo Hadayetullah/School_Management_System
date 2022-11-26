@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title_block %} Dashboard {% endblock %}
+{% block body_block %}
+
+<div class="container" style="font-size:14px;color:#6C757D">
+  <div class="row" style="margin-bottom:40px;">
+    <div class="col-sm-6" style="background:#fff;border:1px solid #6C757D">
+      <div class="row">
+        <div style="width:100%;border-bottom:1px solid #D9DCE1;margin-bottom:10px;">
+          <h5 style="margin:10px 0 10px 10px;">Student Information</h5>
+        </div>
+        <div class="col-sm-5" style="padding-top:6px;">
+          <img src="/media/{{user.profile.profile_pic }}" alt="{{ user.profile.surname }}'s photo" width="100%"
+            height="140px;">
+        </div>
+        <div class="col-sm-3">
+          <p>Name:</p>
+          <p>Gender:</p>
+          <p>Class:</p>
+          <p>Roll:</p>
+        </div>
+        <div class="col-sm-4" id="user">
+          <p id="{{user.pk}}">{{user.profile.full_name}}</p>
+          <p>{{user.profile.gender}}</p>
+          <p>{{user.profile.select_class}}</p>
+          <p>{{user.profile.roll}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6"
+      style="height:205px;background:#fff;padding-top:50px;text-align:center;border:1px solid #6C757D">
+      <h2>Notice Board</h2>
+    </div>
+  </div>
+
+
+
+  <div class="row" style="margin-bottom:40px;">
+    <div class="col-sm-12" style="background:#fff;padding-top:10px;text-align:center;border:1px solid #6C757D">
+      <div>
+        <h2>Graph</h2>
+        <p>Your monthly performance</p>
+      </div>
+      <canvas id="myChart" style="width:100%;"></canvas>
+    </div>
+  </div>
+
+
+
+
+  <!-- <div class="row">
+    <div class="col-sm-6" style="height:205px;text-align:center;border:1px solid #6C757D">
+      <div class="row">
+        <div class="col-sm-5" style="height:80px;background:#fff;margin:0 10px 10px 0;">
+          <h6 style="padding-top:25px;">Due Fees</h6>
+        </div>
+        <div class="col-sm-6" style="height:80px;background:#fff;margin-bottom:10px;">
+          <h6 style="padding-top:25px;">Upcomming Exams</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5" style="height:80px;background:#fff;margin-right:10px;">
+          <h6 style="padding-top:25px;">Result Published</h6>
+        </div>
+        <div class="col-sm-6" style="height:80px;background:#fff;">
+          <h6 style="padding-top:25px;">Total Expenses</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6"
+      style="height:205px;background:#fff;padding-top:50px;text-align:center;border:1px solid #6C757D">
+      <h2>All Expenses</h2>
+    </div>
+  </div> -->
+</div>
+
+<br>
+<br>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+  let count = 0
+  let user = document.getElementById("user").children[0].id;
+  user = parseInt(user);
+  let yValues = [];
+  let test1 = 0;
+  let test2 = 0;
+  let test3 = 0;
+  let test4 = 0;
+  let test5 = 0;
+  let midterm = 0;
+  let test6 = 0;
+  let test7 = 0;
+  let test8 = 0;
+  let test9 = 0;
+  let test10 = 0;
+  let final = 0;
+  fetch("http://127.0.0.1:8000/grade/gradeApi/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(response => response.json())
+    .then(data => data.forEach(element => {
+      if (element.user === user) {
+        count += 1
+        // console.log("Count", count);
+        test1 += element.test1;
+        // console.log("Test1 ", test1);
+
+        test2 += element.test2;
+        test3 += element.test3;
+        test4 += element.test4;
+        test5 += element.test5;
+        midterm += element.midterm;
+        test6 += element.test6;
+        test7 += element.test7;
+        test8 += element.test8;
+        test9 += element.test9;
+        test10 += element.test10;
+        final += element.final;
+        yValues.push(((test1 / count) * 100) / 20);
+        yValues.push(((test2 / count) * 100) / 20);
+        yValues.push(((test3 / count) * 100) / 20);
+        yValues.push(((test4 / count) * 100) / 20);
+        yValues.push(((test5 / count) * 100) / 20);
+        yValues.push(((midterm / count) * 100) / 40);
+        yValues.push(((test6 / count) * 100) / 20);
+        yValues.push(((test7 / count) * 100) / 20);
+        yValues.push(((test8 / count) * 100) / 20);
+        yValues.push(((test9 / count) * 100) / 20);
+        yValues.push(((test10 / count) * 100) / 20);
+        yValues.push(((final / count) * 100) / 40);
+
+        let xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // let barColors = ["red", "green", "blue", "orange", "brown"];
+        let barColors = ["orange", "orange", "orange", "orange", "orange", "orange", "orange", "orange", "orange", "orange", "orange", "orange"];
+
+        new Chart("myChart", {
+          type: "bar",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            legend: { display: false }
+          }
+        });
+      }
+    }))
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% block title_block %}
+Profile | {{teacher.surname}}
+{% endblock %}
+{% block body_block %}
+
+<div class="container" style="font-size:14px;">
+  <div class="row" style="margin-bottom:10px;">
+    <div class="col-sm-6" style="height:330px;margin:10px 0 0 0;text-align:center;border:1px solid #000">
+      <div class="row">
+        <div class="col-sm-5" style="height:80px;background:#fff;margin:0 10px 10px 0;">
+          <h6 style="padding-top:25px;">Our Total Students</h6>
+        </div>
+        <div class="col-sm-6" style="height:80px;background:#fff;margin-bottom:10px;">
+          <h6 style="padding-top:25px;">Total Due Fees</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5" style="height:80px;background:#fff;margin-right:10px;">
+          <h6 style="padding-top:25px;">Collections</h6>
+        </div>
+        <div class="col-sm-6" style="height:80px;background:#fff;">
+          <h6 style="padding-top:25px;">Total Expenses</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6" style="height:330px;text-align:center;background:#fff;margin-top:10px;border:1px solid #000">
+      <h4>Event Calender</h4>
+
+      <table class="table" id="date">
+        <thead>
+          <tr></tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
+
+
+
+  <div class="row" style="margin-bottom:10px;">
+    <div class="col-sm-6" style="height:330px;text-align:center;background:#fff;margin-top:10px;border:1px solid #000">
+      <h2 style="padding-top:50px;">Notice Board</h2>
+    </div>
+    <div class="col-sm-6" style="height:330px;text-align:center;background:#fff;margin-top:10px;border:1px solid #000">
+      <h2 style="padding-top:50px;">Recent Activities</h2>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+<script>
+  const d = new Date("2022-09-01");
+  console.log(d.getDate());
+  console.log(d.getMonth());
+  console.log(d.getDay());
+  var year = d.getFullYear();
+  console.log(year);
+  const days_list = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+
+
+  let table = document.getElementById('date');
+  let thead = document.createElement('thead');
+  let tbody = document.createElement('tbody');
+  let tr = document.createElement('tr');
+
+  for (let day in days_list) {
+    let node = document.createTextNode(days_list[day]);
+    let th = document.createElement('th');
+    th.appendChild(node);
+    tr.appendChild(th);
+
+  }
+
+  thead.appendChild(tr);
+
+
+  let x = true;
+  let left_date = 1;
+  let date_now = new Date();
+  let days_of_month = getFullMonth(date_now.getMonth());
+  let first_day = d.getDay();
+
+  while (x) {
+    let i;
+    if (left_date <= 1) {
+      let tr1 = document.createElement('tr');
+      for (i = 0; i <= 6; i++) {
+        if (i < first_day) {
+          let node = document.createTextNode(0);
+          let td = document.createElement('td');
+          td.style.visibility = "hidden";
+          td.appendChild(node);
+          tr1.appendChild(td);
+        }
+        else {
+          let node = document.createTextNode(left_date);
+          let td = document.createElement('td');
+          if (date_now.getDate() === left_date) {
+            td.style.border = "1px solid green";
+            console.log(date_now.getDate(), left_date);
+          }
+          td.appendChild(node);
+          tr1.appendChild(td);
+          left_date += 1;
+        }
+
+      }
+      tbody.appendChild(tr1);
+
+    } else if (left_date <= days_of_month) {
+      let tr1 = document.createElement('tr');
+      for (i = 0; i <= 6; i++) {
+        if (left_date <= days_of_month) {
+          let node = document.createTextNode(left_date);
+          let td = document.createElement('td');
+          if (date_now.getDate() === left_date) {
+            let div = document.createElement('div');
+            div.appendChild(node);
+            div.style.width = "80%";
+            div.style.margin = "0 auto";
+            div.style.border = "1px solid green";
+            div.style.borderRadius = "30px";
+            node = div;
+          }
+          td.appendChild(node);
+          tr1.appendChild(td);
+          left_date += 1
+        } else {
+          let node = document.createTextNode(0);
+          let td = document.createElement('td');
+          td.style.visibility = "hidden";
+          td.appendChild(node);
+          tr1.appendChild(td);
+        }
+      }
+      tbody.appendChild(tr1);
+
+    } else {
+      x = false;
+    }
+
+  }
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+
+  function getFullMonth(m) {
+    let month;
+    switch (m) {
+      case 0:
+        month = 31;
+        break;
+      case 1:
+        const date = new Date();
+        const year = date.getFullYear()
+        if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0)) {
+          month = 29;
+        } else {
+          month = 28;
+        }
+        break;
+      case 2:
+        month = 31;
+        break;
+      case 3:
+        month = 30;
+        break;
+      case 4:
+        month = 31;
+        break;
+      case 5:
+        month = 30;
+        break;
+      case 6:
+        month = 31;
+        break;
+      case 7:
+        month = 31;
+        break;
+      case 8:
+        month = 30;
+        break;
+      case 9:
+        month = 31;
+        break;
+      case 10:
+        month = 30;
+        break;
+      case 11:
+        month = 31;
+    }
+    return month;
+  }
+
+
+</script>
+
+{% endblock %}

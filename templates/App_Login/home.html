@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+<div class="container">
+    <h2 class="text-center text-info" style="font-weight: bold;">Welcome to Our School</h2>
+    <div class="bg-info" style="width: 300px;margin: 0 auto;">
+        <a class="btn btn-info btn-lg btn-block" href="{% url 'App_Login:signup' %}">Take Admission</a>
+        <a class="btn btn-info btn-lg btn-block" href="{% url 'App_Login:student_login' %}">Student Login</a>
+        <a class="btn btn-info btn-lg btn-block" href="{% url 'App_Login:teacher_login' %}">Tacher Login</a>
+        <a class="btn btn-info btn-lg btn-block" href="{% url 'App_Login:admin_login' %}">Admin Login</a>
+    </div>
+</div>
+
+{% endblock %}

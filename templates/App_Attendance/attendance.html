@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Take Attendance {% endblock %}
+{% block body_block %}
+
+<div class="container">
+  <div id="alert"></div>
+  <h5 style="font-weight: bold;color: #726d6d;">Class - {{ class_no }} Attendance Sheet</h5>
+  <form id="attendance">
+    <table class="table" style="color:#6C757D;border: 1px solid#dee2e6;">
+      <thead>
+        <tr style="border-top: none;">
+          <th width="30%" class="text-center" style="border-top: none;">Student ID</th>
+          <th width="40%" style="border-top: none;">Student Name</th>
+          <th width="30%" class="text-center" style="border-top: none; padding-right: 15%;">Attendance Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <td class="text-center">{{ student.roll }}</td>
+          <td>{{ student.full_name }}</td>
+          <td class="text-center" style="padding-right: 15%;"><input type="checkbox" id="{{student.id}}"
+              name="{{student.select_class}}"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <button style="width: 30%;" class="btn btn-lg btn-secondary" id="submit" type="submit">Submit</button>
+  </form>
+  <br><br>
+
+</div>
+
+
+
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+
+  // Check whether todays attendance was taken or not.
+  let today = new Date();
+  let year = today.getFullYear().toString();
+  let month = (today.getMonth() + 1).toString();
+  let day = today.getDate().toString();
+  if (month.length == 1) {
+    month = "0" + month;
+  }
+  if (day.length == 1) {
+    day = "0" + day;
+  }
+  let date = year + "-" + month + "-" + day;
+  // console.log(date);
+  axios.get("http://127.0.0.1:8000/attendance/api/")
+    .then(response => response.data)
+    .then(data => data.forEach(element => {
+      // console.log("Fetched Date: ", element.created)
+      if (element.created == date) {
+        // console.log("Matched");
+        let id = element.student.toString();
+        // console.log("Before: ", id);
+        let field = document.getElementById(id);
+        if (field != null) {
+          field.checked = element.present;
+          field.disabled = true;
+          document.getElementById("submit").disabled = true;
+          let alert_class = document.getElementById("alert");
+          alert_class.setAttribute("class", "alert alert-warning mb-5");
+          alert_class.textContent = "Today's attendance is already taken!";
+        }
+        // console.log("ID: ", field);
+      }
+    }))
+
+
+
+  // Post Attendance Data
+  document.getElementById("attendance").addEventListener('submit', formdata);
+  function formdata(e) {
+    let allfield = e.target.elements;
+    // console.log(allfield);
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    let date = year.toString() + "-" + month.toString() + "-" + day.toString();
+    console.log("In Post", date);
+
+    for (let x in allfield) {
+      if (allfield[x].type === "checkbox") {
+        // console.log(parseInt(allfield[x].name));
+        let body = {
+          student: allfield[x].id,
+          class_no: parseInt(allfield[x].name),
+          present: allfield[x].checked,
+          created: date,
+          session: year,
+        }
+
+        // let body = {
+        //   "student": 64,
+        //   "class_no": 8,
+        //   "present": false,
+        //   "created": "2022-10-31",
+        //   "session": 2022
+        // }
+        // console.log(body);
+
+        axios.post("http://127.0.0.1:8000/attendance/api/", body, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        // .then(response => console.log(response))
+        // .then(data => console.log(data))
+      }
+    }
+    e.preventDefault();
+  }
+
+
+</script>
+
+{% endblock %}

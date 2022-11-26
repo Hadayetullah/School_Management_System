@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">School Management System</a> <span style="color:#fff">|</span>
+    <ul class="navbar-nav">
+      {% if request.user.is_authenticated %}
+      {% if admin == "admin" %}
+      <li class="nav-item">
+        <a href="{% url 'App_Login:admin_dashboard' %}" class="nav-link">
+          <i class="fas fa-school"></i> Dashboard
+          <!-- <span class="badge badge-light">{{request.user}}</span> -->
+        </a>
+      </li>
+      {% elif admin == "teacher" %}
+      <li class="nav-item">
+        <a href="{% url 'App_Login:teacher_dashboard' %}" class="nav-link">
+          <i class="fas fa-school"></i> Dashboard
+          <!-- <span class="badge badge-light">{{request.user}}</span> -->
+        </a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a href="{% url 'App_Login:dashboard' %}" class="nav-link">
+          <i class="fas fa-school"></i> Dashboard
+          <!-- <span class="badge badge-light">{{request.user}}</span> -->
+        </a>
+      </li>
+      {% endif %}
+      {% else %}
+      <li class="nav-item">
+        <a href="{% url 'App_Login:home' %}" class="nav-link">
+          <i class="fas fa-briefcase"></i> Home
+          <!-- <span class="badge badge-light">{{request.user}}</span> -->
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"
+      area-controls="navbarNav" area-expanded="false" area-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
+        {% if admin == "admin" %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            area-haspopup="true" area-expanded="false">
+            <i class="fas fa-user-tie"></i> {{request.user.teacher.full_name}}(Admin)
+          </a>
+          <div class="dropdown-menu" area-labelledby="navbarDropdown">
+            <!-- <a class="dropdown-item" href="{% url 'App_Login:profile' %}">Profile</a> -->
+            <a class="dropdown-item" href="{% url 'App_Login:all_teacher' %}">Teacher</a>
+            <!-- <a class="dropdown-item" href="#">Accounts</a> -->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'App_Login:logout' %}">Logout</a>
+          </div>
+        </li>
+        {% elif admin == "teacher" %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            area-haspopup="true" area-expanded="false">
+            <i class="fas fa-user-tie"></i> {{teacher.surname}} (Teacher)
+          </a>
+          <div class="dropdown-menu" area-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'App_Teacher:teacher_profile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'App_Attendance:attendance' %}">Attendance</a>
+            <a class="dropdown-item" href="{% url 'App_Mark:grade' %}">Input Mark</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'App_Login:logout' %}">Logout</a>
+          </div>
+        </li>
+        {% else %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            area-haspopup="true" area-expanded="false">
+            <i class="fas fa-user-tie"></i> {{request.user.profile.surname}}
+          </a>
+          <div class="dropdown-menu" area-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'App_Login:profile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'App_Login:routine' %}">Class Routine</a>
+            <!-- <a class="dropdown-item" href="#">Grade</a>
+            <a class="dropdown-item" href="#">Accounts</a> -->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'App_Login:logout' %}">Logout</a>
+          </div>
+        </li>
+        {% endif %}
+        {% else %}
+        <li class="nav-item">
+
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
