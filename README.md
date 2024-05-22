@@ -1,6 +1,2 @@
-## Please follow this instruction
-oishadkfl;iaslfdfsdhaflfhdsa;hf;sadfhadfhadfhadfhwaSFOWASFHKLWASFKL
-### LSKDFASDHPIOGWEAKLHSADF,HFK
-* SDAFASDF
-** SAFASFASDF
-* ASSDFSDFAF *
+## Visit:
+https://hadayetullah.pythonanywhere.com/account/home/
